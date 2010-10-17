@@ -6,7 +6,9 @@ public class Main {
 	
 	private static final String URL = "http://www.timetab.ed.ac.uk/tt.tar.gz";
 	
-	private static final String FOLDER = System.getProperty("java.io.tmpdir") + File.separatorChar + "parser";
+	private static final String FOLDER = System.getProperty("java.io.tmpdir") + "parser";
+	
+	private static final String OUTPUT = FOLDER + File.separatorChar + "storage.db";
 	
 	private static final boolean CHECK_FOR_NEW_FILES = false;
 	
@@ -45,9 +47,28 @@ public class Main {
 		}
 	}
 	
-	private static void parseData() {
+	private static void parseData()
+	{
+		DBAdapter adapter = null;
+		
+		try
+		{
+			File file = new File(OUTPUT);
+			
+			if (file.exists()) {
+				file.delete();
+			}
+			
+			adapter = new DBAdapter(file.toString());
+		}
+		catch (Exception e)
+		{
+			System.out.println("Database connection cannot be created");
+		}
 		
 		Parser parser = new Parser(new File(FOLDER));
-		parser.parse();
+		parser.parse(adapter);
+		
+		System.out.println("Output file generated at: " + OUTPUT);
 	}
 }

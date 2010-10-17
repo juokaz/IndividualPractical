@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.BufferedInputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.regex.*;
 
 public class Parser {
@@ -22,7 +23,7 @@ public class Parser {
 		this.folder = folder;
 	}
 	
-	public void parse()
+	public void parse(DBAdapter adapter)
 	{
 		HashMap<String, College> colleges = parseColleges();
 		HashMap<String, School> schools = parseSchools();
@@ -36,6 +37,20 @@ public class Parser {
 			System.out.println("Schools: " + schools.size());
 			System.out.println("Subject areas: " + subjectAreas.size());
 			System.out.println("Courses: " + courses.size());
+		}
+		
+		try
+		{
+			adapter.insertColleges(colleges);
+			adapter.insertSchools(schools);
+			adapter.insertSubjectAreas(subjectAreas);
+			adapter.insertCourses(courses);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -149,11 +164,11 @@ public class Parser {
         while (matcher.find()) { 
         	courses.get(matcher.group(1)).setBlocks(matcher.group(2));
         }
-        matcher = Pattern.compile("Courses\\['(\\S+)'\\].CO = new Array \\((.+)\\);").matcher(data); 
+        matcher = Pattern.compile("Courses\\['(\\S+)'\\].CO = new Array\\((.+)\\);").matcher(data); 
         while (matcher.find()) { 
         	courses.get(matcher.group(1)).setCO(matcher.group(2));
         }
-        matcher = Pattern.compile("Courses\\['(\\S+)'\\].SY = new Array \\((.+)\\);").matcher(data); 
+        matcher = Pattern.compile("Courses\\['(\\S+)'\\].SY = new Array\\((.+)\\);").matcher(data); 
         while (matcher.find()) { 
         	courses.get(matcher.group(1)).setSY(matcher.group(2));
         }
