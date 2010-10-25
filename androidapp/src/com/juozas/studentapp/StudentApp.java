@@ -1,58 +1,106 @@
 package com.juozas.studentapp;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import android.app.Activity;
 import android.app.ListActivity;
-import android.database.Cursor;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.SimpleAdapter.ViewBinder;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 
 public class StudentApp extends ListActivity {
+	
+	private EditText ed;
+	
+	private List<Map<String, Course>> courses = null;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        DBAdapter db = new DBAdapter(this);
+        DataProvider data = ((App)getApplicationContext()).getDataProvider();
         
-        ArrayList<String> courses = new ArrayList<String>();
+        courses = data.getCourses();
         
-        try
-        {
-	        db.open();
-	        
-	        Cursor c = db.getAllCourses();
-	        if (c.moveToFirst())
-	        {
-	            do {          
-	            	courses.add(c.getString(0));
-	            } while (c.moveToNext());
-	        }
-	        db.close();
-        }
-        catch (Exception e)
-        {
-        	Toast.makeText(this, "Error:" + e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-        
-        setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, courses));
+        updateList(courses);
 
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
 
         lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// When clicked, show a toast with the TextView text
-				Toast.makeText(getApplicationContext(), ((TextView) view).getText(),Toast.LENGTH_SHORT).show();
+                Intent courseIntent = new Intent(getApplicationContext(), CourseActivity.class);
+                
+                ListView lv = (ListView) parent;
+                
+                Course course = (Course) ((Map<String, Course>) parent.getItemAtPosition(position)).get(DataProvider.DATA);
+                
+                courseIntent.setData(Uri.parse(course.getKey()));
+                startActivity(courseIntent);
 			}
         });
+        
+        ed = (EditText) findViewById(R.id.search);
+
+        ed.addTextChangedListener(new TextWatcher() {
+
+        	 public void afterTextChanged(Editable s) {
+        	 }
+
+        	 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        	 }
+
+        	 public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+	        	 List<Map<String, Course>> searched = new ArrayList<Map<String, Course>>();
+	        	 
+	        	 String search = ed.getText().toString().toLowerCase();
+	        	 
+	        	 for (int i = 0; i < courses.size(); i++) {
+	        		 Map<String, Course> course = courses.get(i);
+	        		 
+	        		 if (course.get(DataProvider.DATA).getTitle().toLowerCase().contains(search)) {
+						searched.add(course);
+					 }
+        		 }
+	        	 
+	        	 updateList(searched);
+        	 }
+    	 });
+    }
+    
+    private void updateList(List<Map<String, Course>> data)
+    {
+    	 SimpleAdapter simpleAdapter = new SimpleAdapter(this, data, R.layout.list_item,
+                 new String[] {
+    			 	DataProvider.DATA
+                 }, new int[] {
+                     R.id.title
+                 });
+         simpleAdapter.setViewBinder(new ViewBinder() {
+        	@Override
+    	    public boolean setViewValue(View view, Object data, String stringRepresetation) {
+        		Course listItem = (Course)data;
+
+    	        TextView menuItemView = (TextView)view;
+    	        menuItemView.setText(listItem.getTitle());
+
+    	        return true;
+    	    }
+         });
+         setListAdapter(simpleAdapter);
     }
 }
