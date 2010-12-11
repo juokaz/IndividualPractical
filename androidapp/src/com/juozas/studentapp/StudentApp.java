@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.ListActivity;
+import android.app.TabActivity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.AdapterView;
@@ -14,93 +16,47 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleAdapter.ViewBinder;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 
-public class StudentApp extends ListActivity {
-	
-	private EditText ed;
-	
-	private List<Map<String, Course>> courses = null;
+public class StudentApp extends TabActivity {
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    	super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
-        DataProvider data = ((App)getApplicationContext()).getDataProvider();
-        
-        courses = data.getCourses();
-        
-        updateList(courses);
 
-        ListView lv = getListView();
-        lv.setTextFilterEnabled(true);
+        Resources res = getResources(); // Resource object to get Drawables
+        TabHost tabHost = getTabHost();  // The activity TabHost
+        TabHost.TabSpec spec;  // Reusable TabSpec for each tab
+        Intent intent;  // Reusable Intent for each tab
 
-        lv.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent courseIntent = new Intent(getApplicationContext(), CourseActivity.class);
-                
-                ListView lv = (ListView) parent;
-                
-                Course course = (Course) ((Map<String, Course>) parent.getItemAtPosition(position)).get(DataProvider.DATA);
-                
-                courseIntent.setData(Uri.parse(course.getKey()));
-                startActivity(courseIntent);
-			}
-        });
-        
-        ed = (EditText) findViewById(R.id.search);
+        // Create an Intent to launch an Activity for the tab (to be reused)
+        intent = new Intent().setClass(this, ScheduleActivity.class);
 
-        ed.addTextChangedListener(new TextWatcher() {
+        // Initialise a TabSpec for each tab and add it to the TabHost
+        spec = tabHost.newTabSpec("schedule").setIndicator("Schedule",
+                          res.getDrawable(R.drawable.ic_tab_schedule))
+                      .setContent(intent);
+        tabHost.addTab(spec);
 
-        	 public void afterTextChanged(Editable s) {
-        	 }
+        // Do the same for the other tabs
+        intent = new Intent().setClass(this, TakingActivity.class);
+        spec = tabHost.newTabSpec("taking").setIndicator("Taking",
+                          res.getDrawable(R.drawable.ic_tab_taking))
+                      .setContent(intent);
+        tabHost.addTab(spec);
 
-        	 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        	 }
+        intent = new Intent().setClass(this, CoursesActivity.class);
+        spec = tabHost.newTabSpec("courses").setIndicator("Courses",
+                          res.getDrawable(R.drawable.ic_tab_courses))
+                      .setContent(intent);
+        tabHost.addTab(spec);
 
-        	 public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-	        	 List<Map<String, Course>> searched = new ArrayList<Map<String, Course>>();
-	        	 
-	        	 String search = ed.getText().toString().toLowerCase();
-	        	 
-	        	 for (int i = 0; i < courses.size(); i++) {
-	        		 Map<String, Course> course = courses.get(i);
-	        		 
-	        		 if (course.get(DataProvider.DATA).getTitle().toLowerCase().contains(search)) {
-						searched.add(course);
-					 }
-        		 }
-	        	 
-	        	 updateList(searched);
-        	 }
-    	 });
-    }
-    
-    private void updateList(List<Map<String, Course>> data)
-    {
-    	 SimpleAdapter simpleAdapter = new SimpleAdapter(this, data, R.layout.list_item,
-                 new String[] {
-    			 	DataProvider.DATA
-                 }, new int[] {
-                     R.id.title
-                 });
-         simpleAdapter.setViewBinder(new ViewBinder() {
-        	@Override
-    	    public boolean setViewValue(View view, Object data, String stringRepresetation) {
-        		Course listItem = (Course)data;
-
-    	        TextView menuItemView = (TextView)view;
-    	        menuItemView.setText(listItem.getTitle());
-
-    	        return true;
-    	    }
-         });
-         setListAdapter(simpleAdapter);
+        tabHost.setCurrentTab(0);
     }
 }
