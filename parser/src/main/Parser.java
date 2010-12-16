@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.BufferedInputStream;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.regex.*;
 
 public class Parser {
@@ -29,9 +30,19 @@ public class Parser {
 		HashMap<String, School> schools = parseSchools();
 		HashMap<String, SubjectArea> subjectAreas = parseSubjectAreas();
 		
-		HashMap<String, Course> courses = parseCourses();
-		parseEvents(courses);
-        
+		HashMap<String, Course> courses = new HashMap<String, Course>();
+		HashMap<String, Course> courses_ = parseCourses();
+	    
+		parseEvents(courses_);
+		
+		Iterator it = courses_.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pairs = (Map.Entry)it.next();
+	        if (((Course) pairs.getValue()).getNormalYear().compareTo("1") == 0) {
+				courses.put((String) pairs.getKey(), (Course) pairs.getValue());
+			}
+	    }
+		
 		if (Main.DEBUG) {
 			System.out.println("Colleges: " + colleges.size());
 			System.out.println("Schools: " + schools.size());
@@ -182,7 +193,7 @@ public class Parser {
         }
         matcher = Pattern.compile("Courses\\['(\\S+)'\\].Location = \"(.+)\";").matcher(data);
         while (matcher.find()) { 
-        	courses.get(matcher.group(1)).setLocation(matcher.group(2));
+        	courses.get(matcher.group(1)).setLocation(matcher.group(2).replace("<b>Site:</b>", "").trim());
         }
         
         return courses;
