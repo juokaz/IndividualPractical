@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.util.Log;
 
 public class DataProvider {
 
@@ -31,11 +33,25 @@ public class DataProvider {
 	
 	public List<Map<String, Course>> getCourses(String search)
 	{
+		return _processCourses(dbadapter.getAllCourses(search));
+	}
+	
+	public List<Map<String, Course>> getCoursesTaking()
+	{
+		return this.getCoursesTaking("");
+	}
+	
+	public List<Map<String, Course>> getCoursesTaking(String search)
+	{
+		return _processCourses(dbadapter.getTakingCourses(search));
+	}
+	
+	private List<Map<String, Course>> _processCourses(Cursor c)
+	{
 		List<Map<String, Course>> courses = new ArrayList<Map<String, Course>>();
         
         try
         {
-	        Cursor c = dbadapter.getAllCourses(search);
 	        if (c.moveToFirst())
 	        {
 	            do {          
@@ -51,7 +67,7 @@ public class DataProvider {
         }
         catch (Exception e)
         {
-        	
+        	Log.d("DataProvider", "Error processing courses: " + e.getMessage());
         }
         
         return courses;
@@ -67,5 +83,24 @@ public class DataProvider {
 		course.setLocation(cursor.getString(cursor.getColumnIndex("location")));
 		
 		return course;
+	}
+	
+	public boolean isUserTakingThis(String id)
+	{
+		Cursor cursor = dbadapter.getIsTaking(id);
+		
+		return cursor.getCount() > 0;
+	}
+	
+	public boolean saveCourse(String id)
+	{
+		return dbadapter.saveCourse(id);
+	}
+	
+	public boolean removeCourse(String id)
+	{
+		dbadapter.removeCourse(id);
+		
+		return !isUserTakingThis(id);
 	}
 }

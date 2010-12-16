@@ -17,13 +17,12 @@ import android.widget.SimpleAdapter.ViewBinder;
 import android.widget.TextView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 
-public class CoursesActivity extends ListActivity {
+public class CoursesActivity extends CoursesList {
 	
 	private EditText ed;
-	
-	private List<Map<String, Course>> courses = null;
 	
     /** Called when the activity is first created. */
     @Override
@@ -37,21 +36,7 @@ public class CoursesActivity extends ListActivity {
         
         updateList(courses);
 
-        ListView lv = getListView();
-        lv.setTextFilterEnabled(true);
-
-        lv.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent courseIntent = new Intent(getApplicationContext(), CourseActivity.class);
-                
-                ListView lv = (ListView) parent;
-                
-                Course course = (Course) ((Map<String, Course>) parent.getItemAtPosition(position)).get(DataProvider.DATA);
-                
-                courseIntent.setData(Uri.parse(course.getKey()));
-                startActivity(courseIntent);
-			}
-        });
+        addClickHandler();
         
         ed = (EditText) findViewById(R.id.search);
 
@@ -69,6 +54,8 @@ public class CoursesActivity extends ListActivity {
 	        	 
 	        	 String search = ed.getText().toString().toLowerCase();
 	        	 
+        		 Log.d("Courses", "Searching for '" + search + "'");
+	        	 
 	        	 for (int i = 0; i < courses.size(); i++) {
 	        		 Map<String, Course> course = courses.get(i);
 	        		 
@@ -80,27 +67,5 @@ public class CoursesActivity extends ListActivity {
 	        	 updateList(searched);
         	 }
     	 });
-    }
-    
-    private void updateList(List<Map<String, Course>> data)
-    {
-    	 SimpleAdapter simpleAdapter = new SimpleAdapter(this, data, R.layout.list_item,
-                 new String[] {
-    			 	DataProvider.DATA
-                 }, new int[] {
-                     R.id.title
-                 });
-         simpleAdapter.setViewBinder(new ViewBinder() {
-        	@Override
-    	    public boolean setViewValue(View view, Object data, String stringRepresetation) {
-        		Course listItem = (Course)data;
-
-    	        TextView menuItemView = (TextView)view;
-    	        menuItemView.setText(listItem.getTitle());
-
-    	        return true;
-    	    }
-         });
-         setListAdapter(simpleAdapter);
     }
 }

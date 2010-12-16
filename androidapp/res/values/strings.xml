@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, StudentApp!</string>
     <string name="app_name">Student App</string>
+<string name="addCourse">I\'m taking this</string>
 </resources>

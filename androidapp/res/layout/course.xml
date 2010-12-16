@@ -7,7 +7,7 @@
   
   	<TextView
             android:id="@+id/title"
-            android:textSize="35dp"
+            android:textSize="25dp"
             android:textColor="?android:textColorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -18,5 +18,10 @@
             android:paddingTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+            
+    <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addCourse"
+            android:text="@string/addCourse"/>
   
 </LinearLayout>

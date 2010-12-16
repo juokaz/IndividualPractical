@@ -20,6 +20,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 
 public class StudentApp extends TabActivity {
@@ -56,7 +57,12 @@ public class StudentApp extends TabActivity {
                           res.getDrawable(R.drawable.ic_tab_courses))
                       .setContent(intent);
         tabHost.addTab(spec);
-
-        tabHost.setCurrentTab(0);
+        
+        int tab = 0;
+        if (getIntent().getData() != null) {
+        	String param = getIntent().getData().toString();
+        	tab = param != "" ? Integer.parseInt(param) : 0;
+        }
+        tabHost.setCurrentTab(tab);
     }
 }
