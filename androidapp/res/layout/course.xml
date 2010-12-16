@@ -1,27 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-     android:orientation="vertical"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content">
-  
-  	<TextView
-            android:id="@+id/title"
-            android:textSize="25dp"
-            android:textColor="?android:textColorPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    <TextView
-            android:id="@+id/description"
-            android:textSize="18dp"
-            android:textColor="?android:textColorSecondary"
-            android:paddingTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-            
-    <Button android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/addCourse"
-            android:text="@string/addCourse"/>
-  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="wrap_content"
+	android:layout_height="wrap_content">
+
+	<ScrollView android:id="@+id/scrllvwNo1"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<LinearLayout android:orientation="vertical"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+			
+			<TextView android:id="@+id/title" android:textSize="25dp"
+				android:textColor="?android:textColorPrimary" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:paddingBottom="10px" />
+
+			<TableLayout android:id="@+id/TableLayout01"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:stretchColumns="1">
+				<TableRow>
+					<TextView android:layout_column="1" android:text="Level"
+						android:padding="3dip" />
+					<TextView android:id="@+id/level" android:gravity="right"
+						android:padding="3dip" />
+				</TableRow>
+				<TableRow>
+					<TextView android:layout_column="1" android:text="First Meeting"
+						android:padding="3dip" />
+					<TextView android:id="@+id/first_meeting" android:gravity="right"
+						android:padding="3dip" />
+				</TableRow>
+				<TableRow>
+					<TextView android:layout_column="1" android:text="Location"
+						android:padding="3dip" />
+					<TextView android:id="@+id/location" android:gravity="right"
+						android:padding="3dip" />
+				</TableRow>
+				<TableRow>
+					<TextView android:layout_column="1" android:text="College"
+						android:padding="3dip" />
+					<TextView android:id="@+id/college" android:gravity="right"
+						android:padding="3dip" />
+				</TableRow>
+				<TableRow>
+					<TextView android:layout_column="1" android:text="School"
+						android:padding="3dip" />
+					<TextView android:id="@+id/school" android:gravity="right"
+						android:padding="3dip" />
+				</TableRow>
+				<TableRow>
+					<TextView android:layout_column="1" android:text="Subject Area"
+						android:padding="3dip" />
+					<TextView android:id="@+id/subject_area" android:gravity="right"
+						android:padding="3dip" />
+				</TableRow>
+			</TableLayout>
+
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/special_arrangements_label"
+				android:layout_column="1" android:text="Special Arrangements"
+				android:padding="3dip" />
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/special_arrangements"
+				android:gravity="left" android:padding="3dip" />
+
+			<Button android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/addCourse"
+				android:text="@string/addCourse" android:paddingTop="10px" />
+				
+		</LinearLayout>
+	</ScrollView>
 </LinearLayout>

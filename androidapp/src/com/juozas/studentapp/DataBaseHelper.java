@@ -10,6 +10,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -40,16 +41,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 * */
 	private void createDataBase() throws IOException {
 
+		Log.d("DatabaseHelper", "Create database");
+		
 		boolean dbExist = checkDataBase();
 
 		if (dbExist) {
-			// do nothing - database already exist
+			Log.d("DatabaseHelper", "Database already exist");
 		} else {
-
-			// By calling this method and empty database will be created into
-			// the default system path
-			// of your application so we are gonna be able to overwrite that
-			// database with our database.
+			Log.d("DatabaseHelper", "Database does not exist");
+			
 			this.getReadableDatabase();
 
 			try {
@@ -144,11 +144,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-
+		try {
+    		createDataBase();
+	 	} catch(Exception e) {
+	 		Log.d("DatabaseHelper", "Error creating database: " + e.getMessage());
+	 	}
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+		Log.w("DatabaseHelper", "Upgrading DB from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
+		onCreate(db);
 	}
 }

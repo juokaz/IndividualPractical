@@ -59,7 +59,10 @@ public class DBAdapter
     
     public Cursor getCourse(String id) 
     {
-    	Cursor mCursor = db.query(true, "courses", new String[] {"key", "title", "location"}, 
+    	Cursor mCursor = db.query(true, "courses", new String[] {
+    						"key", "college", "school", "subject_area", "title", "level", "scqf_level",
+							"acronym", "normal_year", "visitors_only", "blocks", "co", "sy", "first_meet", 
+    						"location", "special_arrangements"}, 
             		"key = ?", 
             		new String[] { id },
             		null, 
@@ -111,6 +114,54 @@ public class DBAdapter
 	        mCursor.moveToFirst();
 	    }
 	    return mCursor;
+    }
+    
+    public Cursor getSchool(String id)
+    {
+    	Cursor mCursor = db.query(true, "schools", new String[] {"key", "name"}, 
+				"key = ?", 
+				new String[] { id },
+				null, 
+				null, 
+				null, 
+				null);
+		
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		return mCursor;
+    }
+    
+    public Cursor getCollege(String id)
+    {
+    	Cursor mCursor = db.query(true, "colleges", new String[] {"key", "name"}, 
+				"key = ?", 
+				new String[] { id },
+				null, 
+				null, 
+				null, 
+				null);
+		
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		return mCursor;
+    }
+    
+    public Cursor getSubjectArea(String id)
+    {
+    	Cursor mCursor = db.query(true, "subject_areas", new String[] {"key", "name"}, 
+				"key = ?", 
+				new String[] { id },
+				null, 
+				null, 
+				null, 
+				null);
+		
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		return mCursor;
     }
     
     private void createCoursesTakingTable() throws Exception

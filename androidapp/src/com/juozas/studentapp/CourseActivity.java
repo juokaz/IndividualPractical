@@ -1,11 +1,13 @@
 package com.juozas.studentapp;
 
+import com.juozas.studentapp.data.*;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,12 +29,8 @@ public class CourseActivity extends Activity {
         data = ((App)getApplicationContext()).getDataProvider();
         
         course = data.getCourse(getIntent().getData().toString());
-
-        TextView title = (TextView) findViewById(R.id.title);
-        TextView description = (TextView) findViewById(R.id.description);
-
-        title.setText(course.getTitle());
-        description.setText(course.getLocation());
+        
+        populateView(course);
         
         courseButton = (Button) findViewById(R.id.addCourse);
         
@@ -49,6 +47,40 @@ public class CourseActivity extends Activity {
         	displayAddButton();
         }
     }
+	
+	protected void populateView(Course course)
+	{
+        TextView title = (TextView) findViewById(R.id.title);
+        title.setText(course.getTitle());
+        
+        TextView location = (TextView) findViewById(R.id.location);
+        location.setText(course.getLocation());
+        
+        TextView college = (TextView) findViewById(R.id.college);
+        college.setText(course.getCollege().getName());
+        
+        TextView school = (TextView) findViewById(R.id.school);
+        school.setText(course.getSchool().getName());
+        
+        TextView subjectArea = (TextView) findViewById(R.id.subject_area);
+        subjectArea.setText(course.getSubjectArea().getName());
+        
+        TextView firstMeeting = (TextView) findViewById(R.id.first_meeting);
+        firstMeeting.setText(course.getFirstMeet());
+        
+        TextView level = (TextView) findViewById(R.id.level);
+        level.setText(course.getSCQFLevel());
+        
+        TextView specialArrangements = (TextView) findViewById(R.id.special_arrangements);
+        
+        if (course.getSpecialArrangements() != null)
+        	specialArrangements.setText(course.getSpecialArrangements());
+        else {
+        	specialArrangements.setVisibility(View.INVISIBLE);
+        	TextView specialArrangementsLabel = (TextView) findViewById(R.id.special_arrangements_label);
+        	specialArrangementsLabel.setVisibility(View.INVISIBLE);
+        }
+	}
 	
 	protected void displayAddButton()
 	{
