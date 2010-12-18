@@ -2,6 +2,7 @@ package com.juozas.studentapp;
 
 import com.juozas.studentapp.data.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -165,6 +166,16 @@ public class DataProvider {
 		dbadapter.removeCourse(id);
 		
 		return !isUserTakingThis(id);
+	}
+	
+	public List<Practical> getPracticals()
+	{
+		return new ArrayList<Practical>();
+	}
+	
+	public Practical getPractical(String id)
+	{
+		return new Practical(Integer.parseInt(id), new Course("TEMP"), "TEMP", new Date());
 	}
 	
 	private boolean doClashesOccur(String id)

@@ -9,14 +9,20 @@
                   android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" /> 
             </intent-filter>
+    <intent-filter>
+    <category android:name="android.intent.category.DEFAULT" />
+    <action android:name="android.intent.action.VIEW" />
+    <data android:scheme="com.juozas.studentapp" />  
+</intent-filter>
         </activity>
 
     <activity android:name="CourseActivity"></activity>
 <activity android:name="TakingActivity"></activity>
 <activity android:name="CoursesActivity"></activity>
 <activity android:name="ScheduleActivity"></activity>
+<activity android:name="PracticalActivity"></activity>
 </application>
 
 
