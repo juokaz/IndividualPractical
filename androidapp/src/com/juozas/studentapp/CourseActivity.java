@@ -30,7 +30,7 @@ public class CourseActivity extends Activity {
         
         course = data.getCourse(getIntent().getData().toString());
         
-        populateView(course);
+        populateView();
         
         courseButton = (Button) findViewById(R.id.addCourse);
         
@@ -48,7 +48,7 @@ public class CourseActivity extends Activity {
         }
     }
 	
-	protected void populateView(Course course)
+	protected void populateView()
 	{
         TextView title = (TextView) findViewById(R.id.title);
         title.setText(course.getTitle());
@@ -70,6 +70,38 @@ public class CourseActivity extends Activity {
         
         TextView level = (TextView) findViewById(R.id.level);
         level.setText(course.getSCQFLevel());
+        
+        TextView courseOrganizer = (TextView) findViewById(R.id.course_organizer);
+        courseOrganizer.setText(course.getCO().getName());
+        courseOrganizer.setClickable(true);
+        courseOrganizer.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d("Course", "Course organizer clicked, send email to: " + course.getCO().getEmail());
+                
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+                emailIntent.setType("plain/text");
+                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{course.getCO().getEmail()});
+
+                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            }
+        });
+        
+        TextView courseSecretary = (TextView) findViewById(R.id.course_secretary);
+        courseSecretary.setText(course.getSY().getName());
+        courseSecretary.setClickable(true);
+        courseSecretary.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d("Course", "Course secretary clicked, send email to: " + course.getSY().getEmail());
+                
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+                emailIntent.setType("plain/text");
+                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{course.getSY().getEmail()});
+
+                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            }
+        });
         
         TextView specialArrangements = (TextView) findViewById(R.id.special_arrangements);
         

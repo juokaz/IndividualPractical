@@ -1,5 +1,9 @@
 package com.juozas.studentapp.data;
 
+import java.sql.Array;
+
+import android.util.Log;
+
 public class Course {
 	
 	private String key;
@@ -13,8 +17,8 @@ public class Course {
 	private String NormalYear;
 	private String VisitorsOnly;
 	private String Blocks;
-	private String CO;
-	private String SY;
+	private Person CO;
+	private Person SY;
 	private String SpecialArrangements;
 	private String FirstMeet;
 	private String Location;
@@ -99,17 +103,17 @@ public class Course {
 	public void setBlocks(String blocks) {
 		Blocks = blocks;
 	}
-	public String getCO() {
+	public Person getCO() {
 		return CO;
 	}
 	public void setCO(String cO) {
-		CO = cO;
+		CO = Person.factory(cO);
 	}
-	public String getSY() {
+	public Person getSY() {
 		return SY;
 	}
 	public void setSY(String sY) {
-		SY = sY;
+		SY = Person.factory(sY);
 	}
 	public String getSpecialArrangements() {
 		return SpecialArrangements;
