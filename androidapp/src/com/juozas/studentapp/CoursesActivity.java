@@ -30,6 +30,7 @@ public class CoursesActivity extends CoursesList {
         addClickHandler();
         
         ed = (EditText) findViewById(R.id.search);
+        ed.requestFocus();
 
         ed.addTextChangedListener(new TextWatcher() {
 
