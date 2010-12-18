@@ -12,8 +12,6 @@ import android.util.Log;
 
 public class DataProvider {
 
-	public static String DATA = "data";
-	
 	private DBAdapter dbadapter = null;
 
 	public DataProvider(DBAdapter adapter)
@@ -27,33 +25,32 @@ public class DataProvider {
 		dbadapter.close();
 	} 
 	
-	public List<Map<String, Course>> getCourses()
+	public List<Course> getCourses()
 	{
 		return this.getCourses("");
 	}
 	
-	public List<Map<String, Course>> getCourses(String search)
+	public List<Course> getCourses(String search)
 	{
 		return processCourses(dbadapter.getAllCourses(search));
 	}
 	
-	public List<Map<String, Course>> getCoursesTaking()
+	public List<Course> getCoursesTaking()
 	{
 		return this.getCoursesTaking("");
 	}
 	
-	public List<Map<String, Course>> getCoursesTaking(String search)
+	public List<Course> getCoursesTaking(String search)
 	{
 		return processCourses(dbadapter.getTakingCourses(search));
 	}
 	
 	public List<Course> getCoursesTakingFull()
 	{
-		ArrayList<Course> courses = new ArrayList<Course>();
-		List<Map<String, Course>> taking =  this.getCoursesTaking("");
+		List<Course> courses = new ArrayList<Course>();
+		List<Course> taking =  this.getCoursesTaking("");
 		
-		for (Map<String, Course> courseM : taking) {
-			Course course_ = (Course) courseM.get(DataProvider.DATA);
+		for (Course course_ : taking) {
 			course_ = getCourse(course_.getKey());
 			
 			courses.add(course_);
@@ -189,9 +186,9 @@ public class DataProvider {
     	return practical;
 	}
 	
-	private List<Map<String, Course>> processCourses(Cursor c)
+	private List<Course> processCourses(Cursor c)
 	{
-		List<Map<String, Course>> courses = new ArrayList<Map<String, Course>>();
+		List<Course> courses = new ArrayList<Course>();
         
         try
         {
@@ -201,10 +198,7 @@ public class DataProvider {
 	            	Course course = new Course(c.getString(c.getColumnIndex("key")));
 	            	course.setTitle(c.getString(c.getColumnIndex("title")));
 	            	
-	            	Map<String, Course> item = new HashMap<String, Course>(1);
-	            	item.put(DataProvider.DATA, course);
-	            	
-	            	courses.add(item);
+	            	courses.add(course);
 	            } while (c.moveToNext());
 	        }
         }

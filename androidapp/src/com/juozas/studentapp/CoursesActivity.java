@@ -3,7 +3,6 @@ package com.juozas.studentapp;
 import com.juozas.studentapp.data.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import android.os.Bundle;
 import android.widget.EditText;
@@ -42,16 +41,16 @@ public class CoursesActivity extends CoursesList {
 
         	 public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-	        	 List<Map<String, Course>> searched = new ArrayList<Map<String, Course>>();
+	        	 List<Course> searched = new ArrayList<Course>();
 	        	 
 	        	 String search = ed.getText().toString().toLowerCase();
 	        	 
         		 Log.d("Courses", "Searching for '" + search + "'");
 	        	 
 	        	 for (int i = 0; i < courses.size(); i++) {
-	        		 Map<String, Course> course = courses.get(i);
+	        		 Course course = courses.get(i);
 	        		 
-	        		 if (course.get(DataProvider.DATA).getTitle().toLowerCase().contains(search)) {
+	        		 if (course.getTitle().toLowerCase().contains(search)) {
 						searched.add(course);
 					 }
         		 }

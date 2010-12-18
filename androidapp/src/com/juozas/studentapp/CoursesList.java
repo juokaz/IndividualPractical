@@ -1,6 +1,9 @@
 package com.juozas.studentapp;
 
 import com.juozas.studentapp.data.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +21,7 @@ import android.view.View;
 
 public class CoursesList extends ListActivity {
 	
-	protected List<Map<String, Course>> courses = null;
+	protected List<Course> courses = null;
     
     protected void addClickHandler()
     {
@@ -32,7 +35,7 @@ public class CoursesList extends ListActivity {
                 Intent courseIntent = new Intent(getApplicationContext(), CourseActivity.class);
                 
                 @SuppressWarnings("unchecked")
-				Course course = (Course) ((Map<String, Course>) parent.getItemAtPosition(position)).get(DataProvider.DATA);
+				Course course = (Course) ((Map<String, Course>) parent.getItemAtPosition(position)).get("data");
                 
                 courseIntent.setData(Uri.parse(course.getKey()));
                 startActivity(courseIntent);
@@ -40,11 +43,19 @@ public class CoursesList extends ListActivity {
         });
     }
     
-    protected void updateList(List<Map<String, Course>> data)
+    protected void updateList(List<Course> data)
     {
-    	 SimpleAdapter simpleAdapter = new SimpleAdapter(this, data, R.layout.list_item,
+		List<Map<String, Course>> data_ = new ArrayList<Map<String,Course>>();
+		
+		for (Course course : data) {
+			HashMap<String, Course> map = new HashMap<String, Course>();
+			map.put("data", course);
+			data_.add(map);
+		}
+		
+    	 SimpleAdapter simpleAdapter = new SimpleAdapter(this, data_, R.layout.list_item,
                  new String[] {
-    			 	DataProvider.DATA
+    			 	"data"
                  }, new int[] {
                      R.id.title
                  });
