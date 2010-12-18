@@ -80,6 +80,8 @@ public class Event {
 			events.add(new Event(day, dayint, start_time, start_, end_, duration, site, alternative));
 		}
 		
+		ArrayList<Event> events2 = (ArrayList<Event>) events.clone();
+		
 		// remove bogus/dublicated events
 		// nowhere in original javascript source code it mentions why are they there, but clearly they are not used anywhere
 		for (Event event1 : events) {
@@ -87,7 +89,7 @@ public class Event {
 				// two events for one course happen at same time? Impossible, I assume
 				if (event1.getStartInt() == event2.getStartInt() && !event1.equals(event2)) {
 					if (event2.getLocation() == "OT")
-						events.remove(event2);
+						events2.remove(event2);
 						
 					break;
 				}
@@ -95,7 +97,7 @@ public class Event {
 		}		
 		
 		// sort events by the time they happen
-		Collections.sort(events, new Comparator<Event>() {
+		Collections.sort(events2, new Comparator<Event>() {
 			public int compare(Event event1, Event event2) {
 				if (event1.getDay() != event1.getDay())
 					return event1.getDayInt() - event2.getDayInt();
@@ -104,7 +106,7 @@ public class Event {
 			}
 		});
 		
-		return events;
+		return events2;
 	}
 	
 	public String getStart() {

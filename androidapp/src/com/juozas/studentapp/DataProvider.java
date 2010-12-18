@@ -70,6 +70,8 @@ public class DataProvider {
         	Log.d("DataProvider", "Error processing courses: " + e.getMessage());
         }
         
+        c.close();
+        
         return courses;
 	}
 	
@@ -104,15 +106,21 @@ public class DataProvider {
 		if (cursor_.getCount() > 0)
 			course.setCollege(new College(cursor_.getString(cursor_.getColumnIndex("key")), cursor_.getString(cursor_.getColumnIndex("name"))));
 		
+		cursor_.close();
 		cursor_ = dbadapter.getSchool(cursor.getString(cursor.getColumnIndex("school")));
 		
 		if (cursor_.getCount() > 0)
 			course.setSchool(new School(cursor_.getString(cursor_.getColumnIndex("key")), cursor_.getString(cursor_.getColumnIndex("name"))));
 				
+		cursor_.close();
 		cursor_ = dbadapter.getSubjectArea(cursor.getString(cursor.getColumnIndex("subject_area")));
 
 		if (cursor_.getCount() > 0)
 			course.setSubjectArea(new SubjectArea(cursor_.getString(cursor_.getColumnIndex("key")), cursor_.getString(cursor_.getColumnIndex("name"))));
+		
+		cursor_.close();
+		
+		cursor.close();
 		
 		return course;
 	}
@@ -121,11 +129,19 @@ public class DataProvider {
 	{
 		Cursor cursor = dbadapter.getIsTaking(id);
 		
-		return cursor.getCount() > 0;
+		boolean taking = cursor.getCount() > 0;
+		
+		cursor.close();
+		
+		return taking;
 	}
 	
 	public boolean saveCourse(String id)
 	{
+		// can't take this course, it's causing clashes
+		if (!doClashesOccur(id))
+			return false;
+		
 		return dbadapter.saveCourse(id);
 	}
 	
@@ -134,5 +150,35 @@ public class DataProvider {
 		dbadapter.removeCourse(id);
 		
 		return !isUserTakingThis(id);
+	}
+	
+	private boolean doClashesOccur(String id)
+	{
+		// we want to take this course
+		Course course = getCourse(id);
+		
+		boolean ok = true;
+		
+		List<Map<String, Course>> taking = getCoursesTaking();
+		
+		for (Map<String, Course> courseM : taking) {
+			Course course_ = (Course) courseM.get(DataProvider.DATA);
+			course_ = getCourse(course_.getKey());
+			
+			// different semester
+			if (course.isFirstSemester() && course_.isSecondSemester())
+				continue;
+			
+			// check for events clashes
+			for (Event event1 : course.getEvents()) {
+				for (Event event2 : course_.getEvents()) {
+					if (event1.getStartInt() == event2.getStartInt()) {
+						ok = false;
+					}
+				}
+			}
+		}
+		
+		return ok;
 	}
 }

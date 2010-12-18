@@ -153,7 +153,7 @@ public class CourseActivity extends Activity {
                 	displayRemoveButton();
                 }
                 else
-                	displayError("Course cannot be selected, clashes found!");
+                	displayError("Course cannot be selected, clashes found! Are you sure you are taking this? Check Taking tab to be sure or contact your DoS.");
             }
         });
 	}
