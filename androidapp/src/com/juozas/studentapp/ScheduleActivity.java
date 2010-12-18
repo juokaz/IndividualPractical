@@ -85,7 +85,7 @@ public class ScheduleActivity extends Activity {
 		for (Practical practical : practicals) {
 
 			// if we have more than a month time due for practical
-			if (getDaysDifference(practical.getDue()) > 30 || getDaysDifference(practical.getDue()) < 0)
+			if (practical.isCompleted() || getDaysDifference(practical.getDue()) > 30)
 				continue;
 			
 			TextView name = new TextView(this);
@@ -106,7 +106,11 @@ public class ScheduleActivity extends Activity {
             });
         	
 			TextView time = new TextView(this);
-        	time.setText(getDifference(practical.getDue()) + " left");
+			if (getDaysDifference(practical.getDue()) > 0) {
+				time.setText(getDifference(practical.getDue()) + " left");
+			} else {
+				time.setText("Overdue!");
+			}
         	time.setPadding(0, 0, 10, 0);
         	
         	TableRow row = new TableRow(this);
@@ -121,7 +125,7 @@ public class ScheduleActivity extends Activity {
 		TextView text = (TextView) findViewById(R.id.practicals_text);
 		
 		if (!practicalsSoon) {
-            text.setText("You have no tasks soon!");
+            text.setText("You have no tasks soon! You can relax...");
 		} else {
 			text.setVisibility(TextView.GONE);
 		}
