@@ -26,7 +26,14 @@ public class DBAdapter
         	createCoursesTakingTable();
         } catch (Exception e)
         {
-        	Log.d("DBAdapter", "Exception was thrown while creating a table" + e.getMessage());
+        	Log.d("DBAdapter", "Exception was thrown while creating taking table: " + e.getMessage());
+        }
+        
+        try {
+        	createCoursesPracticalTable();
+        } catch (Exception e)
+        {
+        	Log.d("DBAdapter", "Exception was thrown while creating practicals table: " + e.getMessage());
         }
         
         return this;
@@ -164,11 +171,50 @@ public class DBAdapter
 		return mCursor;
     }
     
+    public Cursor getPractical(String id)
+    {
+    	Cursor mCursor = db.query(true, "practicals", new String[] {"id", "title", "course_id", "due", "notes", "completed"}, 
+				"id = ?", 
+				new String[] { id },
+				null, 
+				null, 
+				null, 
+				null);
+		
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		return mCursor;
+    }
+    
+    public Cursor getPracticals() 
+    {
+        return db.query("practicals", new String[] {"id", "title", "course_id", "due", "notes", "completed"}, 
+                null,
+                null,
+                null, 
+                null, 
+                "due asc");
+    }
+    
     private void createCoursesTakingTable() throws Exception
     {
     	Log.d("DB", "Creating taking table");
     	
     	// this will fail if table exists
     	db.execSQL("create table taking (key VARCHAR(10) PRIMARY KEY);");
+    }
+    
+    private void createCoursesPracticalTable() throws Exception
+    {
+    	Log.d("DB", "Creating practicals table");
+    	
+    	// this will fail if table exists
+    	db.execSQL("create table practicals (id INTEGER PRIMARY KEY," +
+    										"title VARCHAR(255)," +
+    										"course_id VARCHAR(10)," +
+    										"due VARCHAR(50)," +
+    										"notes TEXT," +
+    										"completed INTEGER);");
     }
 }

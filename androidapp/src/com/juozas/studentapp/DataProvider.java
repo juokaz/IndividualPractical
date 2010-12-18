@@ -34,7 +34,7 @@ public class DataProvider {
 	
 	public List<Map<String, Course>> getCourses(String search)
 	{
-		return _processCourses(dbadapter.getAllCourses(search));
+		return processCourses(dbadapter.getAllCourses(search));
 	}
 	
 	public List<Map<String, Course>> getCoursesTaking()
@@ -44,7 +44,7 @@ public class DataProvider {
 	
 	public List<Map<String, Course>> getCoursesTaking(String search)
 	{
-		return _processCourses(dbadapter.getTakingCourses(search));
+		return processCourses(dbadapter.getTakingCourses(search));
 	}
 	
 	public List<Course> getCoursesTakingFull()
@@ -60,35 +60,6 @@ public class DataProvider {
 		}
 		
 		return courses;
-	}
-	
-	private List<Map<String, Course>> _processCourses(Cursor c)
-	{
-		List<Map<String, Course>> courses = new ArrayList<Map<String, Course>>();
-        
-        try
-        {
-	        if (c.moveToFirst())
-	        {
-	            do {          
-	            	Course course = new Course(c.getString(c.getColumnIndex("key")));
-	            	course.setTitle(c.getString(c.getColumnIndex("title")));
-	            	
-	            	Map<String, Course> item = new HashMap<String, Course>(1);
-	            	item.put(DataProvider.DATA, course);
-	            	
-	            	courses.add(item);
-	            } while (c.moveToNext());
-	        }
-        }
-        catch (Exception e)
-        {
-        	Log.d("DataProvider", "Error processing courses: " + e.getMessage());
-        }
-        
-        c.close();
-        
-        return courses;
 	}
 	
 	public Course getCourse(String id)
@@ -170,12 +141,81 @@ public class DataProvider {
 	
 	public List<Practical> getPracticals()
 	{
-		return new ArrayList<Practical>();
+		ArrayList<Practical> practicals = new ArrayList<Practical>();
+		
+		Cursor c = dbadapter.getPracticals();
+		
+        try
+        {
+	        if (c.moveToFirst())
+	        {
+	            do {          
+	            	practicals.add(parsePractical(c));
+	            } while (c.moveToNext());
+	        }
+        }
+        catch (Exception e)
+        {
+        	Log.d("DataProvider", "Error processing practicals: " + e.getMessage());
+        }
+        
+        c.close();
+        
+        return practicals;
 	}
 	
 	public Practical getPractical(String id)
 	{
-		return new Practical(Integer.parseInt(id), new Course("TEMP"), "TEMP", new Date());
+		Cursor cursor = dbadapter.getPractical(id);
+		
+		Practical practical = parsePractical(cursor);
+		
+		cursor.close();
+		
+		return practical;
+	}
+	
+	private Practical parsePractical(Cursor c)
+	{
+		Course course = getCourse(c.getString(c.getColumnIndex("course_id")));
+    	
+    	Practical practical = new Practical(Integer.parseInt(c.getString(c.getColumnIndex("id"))),
+    			course,
+    			c.getString(c.getColumnIndex("title")),
+    			new Date(c.getString(c.getColumnIndex("due"))));
+    	practical.setNotes(c.getString(c.getColumnIndex("notes")));
+    	practical.setCompleted(c.getString(c.getColumnIndex("completed")).equals("1"));
+    	
+    	return practical;
+	}
+	
+	private List<Map<String, Course>> processCourses(Cursor c)
+	{
+		List<Map<String, Course>> courses = new ArrayList<Map<String, Course>>();
+        
+        try
+        {
+	        if (c.moveToFirst())
+	        {
+	            do {          
+	            	Course course = new Course(c.getString(c.getColumnIndex("key")));
+	            	course.setTitle(c.getString(c.getColumnIndex("title")));
+	            	
+	            	Map<String, Course> item = new HashMap<String, Course>(1);
+	            	item.put(DataProvider.DATA, course);
+	            	
+	            	courses.add(item);
+	            } while (c.moveToNext());
+	        }
+        }
+        catch (Exception e)
+        {
+        	Log.d("DataProvider", "Error processing courses: " + e.getMessage());
+        }
+        
+        c.close();
+        
+        return courses;
 	}
 	
 	private boolean doClashesOccur(String id)
