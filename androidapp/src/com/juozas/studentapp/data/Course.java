@@ -162,4 +162,10 @@ public class Course {
 		
 		Options = options;
 	}
+	public boolean isFirstSemester() {
+		return Blocks.equals("S1") || Blocks.equals("B1") || Blocks.equals("B13") || Blocks.equals("B2") || Blocks.equals("B23");
+	}
+	public boolean isSecondSemester() {
+		return Blocks.equals("S2") || Blocks.equals("B3") || Blocks.equals("B4");
+	}
 }

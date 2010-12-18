@@ -11,6 +11,8 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.PorterDuff;
@@ -108,9 +110,25 @@ public class CourseActivity extends Activity {
         if (course.getSpecialArrangements() != null)
         	specialArrangements.setText(course.getSpecialArrangements());
         else {
-        	specialArrangements.setVisibility(View.INVISIBLE);
+        	specialArrangements.setVisibility(View.GONE);
         	TextView specialArrangementsLabel = (TextView) findViewById(R.id.special_arrangements_label);
-        	specialArrangementsLabel.setVisibility(View.INVISIBLE);
+        	specialArrangementsLabel.setVisibility(View.GONE);
+        }
+        
+        TextView lecturesTitle = (TextView) findViewById(R.id.lectures_title);
+        lecturesTitle.setText(lecturesTitle.getText() + ", all in " + (course.isFirstSemester() ? "first" : "second") + " semester");
+        
+        TableLayout lectures = (TableLayout) findViewById(R.id.lectures);
+        
+        for (Event event : course.getEvents()) {
+        	TextView name = new TextView(this);
+        	
+        	name.setText(event.getStart() + " on " + event.getDay() + "'s in " + event.getLocation() + " area");
+        	
+        	TableRow row = new TableRow(this);
+        	row.addView(name);
+        	
+        	lectures.addView(row);
         }
 	}
 	

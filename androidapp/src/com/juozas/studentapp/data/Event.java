@@ -2,6 +2,8 @@ package com.juozas.studentapp.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 import android.util.Log;
 
@@ -15,6 +17,7 @@ public class Event {
 	
 	private int StartInt;
 	private int EndInt;
+	private int DayInt;
 	
 	private static String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 	private static String[] times = {"09.00", "10.00", "11.10", "12.10", "13.05", "14.00", "15.00", "16.10", "17.10"}; 
@@ -22,7 +25,7 @@ public class Event {
 	private static String[] sites = {     "central", "external", "kb", "med+vet", "other"};
 	private static String[] sitesNames = {"CA",      "EX",       "KB", "CA",      "OT"};
 	
-	public Event(String day, String start, int startint, int endint, int duration, String location, String alts) {
+	public Event(String day, int dayint, String start, int startint, int endint, int duration, String location, String alts) {
 		Day = day;
 		Start = start;
 		Duration = duration;
@@ -30,6 +33,7 @@ public class Event {
 		Alts = alts;
 		StartInt = startint;
 		EndInt = endint;
+		DayInt = dayint;
 	}
 
 	public static ArrayList<Event> factory(String start, String end, String sites, String alts) {
@@ -55,7 +59,8 @@ public class Event {
 			int start_ = Integer.parseInt(starts[i].trim());
 			int end_ = Integer.parseInt(ends[i].trim());
 			
-			String day = days[start_ / (24*60)];
+			int dayint = start_ / (24*60);
+			String day = days[dayint];
 			String start_time = times[Arrays.binarySearch(minutes, start_ % (24*60))];
 			int duration = (end_ - start_) / 50;
 			
@@ -72,8 +77,32 @@ public class Event {
 					", start time: " + start_time + ", duration: " + Integer.toString(duration) + ", site: " + site +
 					", alts: " + alternative);
 			
-			events.add(new Event(day, start_time, start_, end_, duration, site, alternative));
+			events.add(new Event(day, dayint, start_time, start_, end_, duration, site, alternative));
 		}
+		
+		// remove bogus/dublicated events
+		// nowhere in original javascript source code it mentions why are they there, but clearly they are not used anywhere
+		for (Event event1 : events) {
+			for (Event event2 : events) {
+				// two events for one course happen at same time? Impossible, I assume
+				if (event1.getStartInt() == event2.getStartInt() && !event1.equals(event2)) {
+					if (event2.getLocation() == "OT")
+						events.remove(event2);
+						
+					break;
+				}
+			}
+		}		
+		
+		// sort events by the time they happen
+		Collections.sort(events, new Comparator<Event>() {
+			public int compare(Event event1, Event event2) {
+				if (event1.getDay() != event1.getDay())
+					return event1.getDayInt() - event2.getDayInt();
+				
+				return event1.getStartInt() - event2.getStartInt();
+			}
+		});
 		
 		return events;
 	}
@@ -127,5 +156,13 @@ public class Event {
 
 	public void setEndInt(int endInt) {
 		EndInt = endInt;
+	}
+
+	public int getDayInt() {
+		return DayInt;
+	}
+
+	public void setDayInt(int dayInt) {
+		DayInt = dayInt;
 	}
 }

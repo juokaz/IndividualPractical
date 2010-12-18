@@ -20,21 +20,23 @@ public final class R {
         public static final int icon=0x7f020006;
     }
     public static final class id {
-        public static final int TableLayout01=0x7f050002;
-        public static final int addCourse=0x7f05000d;
-        public static final int college=0x7f050006;
-        public static final int course_organizer=0x7f050009;
-        public static final int course_secretary=0x7f05000a;
-        public static final int first_meeting=0x7f050004;
-        public static final int level=0x7f050003;
-        public static final int location=0x7f050005;
-        public static final int school=0x7f050007;
+        public static final int TableLayout01=0x7f050004;
+        public static final int addCourse=0x7f05000f;
+        public static final int college=0x7f050008;
+        public static final int course_organizer=0x7f05000b;
+        public static final int course_secretary=0x7f05000c;
+        public static final int first_meeting=0x7f050006;
+        public static final int lectures=0x7f050003;
+        public static final int lectures_title=0x7f050002;
+        public static final int level=0x7f050005;
+        public static final int location=0x7f050007;
+        public static final int school=0x7f050009;
         public static final int scrllvwNo1=0x7f050000;
-        public static final int search=0x7f05000e;
-        public static final int special_arrangements=0x7f05000c;
-        public static final int special_arrangements_label=0x7f05000b;
-        public static final int subject_area=0x7f050008;
-        public static final int text=0x7f05000f;
+        public static final int search=0x7f050010;
+        public static final int special_arrangements=0x7f05000e;
+        public static final int special_arrangements_label=0x7f05000d;
+        public static final int subject_area=0x7f05000a;
+        public static final int text=0x7f050011;
         public static final int title=0x7f050001;
     }
     public static final class layout {
