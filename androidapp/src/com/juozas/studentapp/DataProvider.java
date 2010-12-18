@@ -46,6 +46,21 @@ public class DataProvider {
 		return _processCourses(dbadapter.getTakingCourses(search));
 	}
 	
+	public List<Course> getCoursesTakingFull()
+	{
+		ArrayList<Course> courses = new ArrayList<Course>();
+		List<Map<String, Course>> taking =  this.getCoursesTaking("");
+		
+		for (Map<String, Course> courseM : taking) {
+			Course course_ = (Course) courseM.get(DataProvider.DATA);
+			course_ = getCourse(course_.getKey());
+			
+			courses.add(course_);
+		}
+		
+		return courses;
+	}
+	
 	private List<Map<String, Course>> _processCourses(Cursor c)
 	{
 		List<Map<String, Course>> courses = new ArrayList<Map<String, Course>>();
@@ -159,12 +174,9 @@ public class DataProvider {
 		
 		boolean ok = true;
 		
-		List<Map<String, Course>> taking = getCoursesTaking();
+		List<Course> taking = getCoursesTakingFull();
 		
-		for (Map<String, Course> courseM : taking) {
-			Course course_ = (Course) courseM.get(DataProvider.DATA);
-			course_ = getCourse(course_.getKey());
-			
+		for (Course course_ : taking) {			
 			// different semester
 			if (course.isFirstSemester() && course_.isSecondSemester())
 				continue;
