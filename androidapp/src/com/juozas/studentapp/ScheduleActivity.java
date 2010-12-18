@@ -6,6 +6,7 @@ import com.juozas.studentapp.data.*;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -45,7 +46,7 @@ public class ScheduleActivity extends Activity {
 		        	name.setText(course.getTitle());
 		        	
 					TextView time = new TextView(this);
-		        	time.setText(event.getStart());
+		        	time.setText(Html.fromHtml("<b>" + event.getStart()) + "</b>");
 		        	time.setPadding(0, 0, 10, 0);
 		        	
 		        	TableRow row = new TableRow(this);

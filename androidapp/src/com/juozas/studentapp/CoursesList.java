@@ -31,7 +31,8 @@ public class CoursesList extends ListActivity {
 				
                 Intent courseIntent = new Intent(getApplicationContext(), CourseActivity.class);
                 
-                Course course = (Course) ((Map<String, Course>) parent.getItemAtPosition(position)).get(DataProvider.DATA);
+                @SuppressWarnings("unchecked")
+				Course course = (Course) ((Map<String, Course>) parent.getItemAtPosition(position)).get(DataProvider.DATA);
                 
                 courseIntent.setData(Uri.parse(course.getKey()));
                 startActivity(courseIntent);

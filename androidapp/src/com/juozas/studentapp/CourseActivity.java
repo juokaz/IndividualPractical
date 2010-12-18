@@ -74,7 +74,7 @@ public class CourseActivity extends Activity {
         level.setText(course.getSCQFLevel());
         
         TextView courseOrganizer = (TextView) findViewById(R.id.course_organizer);
-        courseOrganizer.setText(course.getCO().getName());
+        courseOrganizer.setText(Html.fromHtml("<u>" + course.getCO().getName() + "</u>"));
         courseOrganizer.setClickable(true);
         courseOrganizer.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -90,7 +90,7 @@ public class CourseActivity extends Activity {
         });
         
         TextView courseSecretary = (TextView) findViewById(R.id.course_secretary);
-        courseSecretary.setText(course.getSY().getName());
+        courseSecretary.setText(Html.fromHtml("<u>" + course.getSY().getName() + "</u>"));
         courseSecretary.setClickable(true);
         courseSecretary.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

@@ -80,6 +80,7 @@ public class Event {
 			events.add(new Event(day, dayint, start_time, start_, end_, duration, site, alternative));
 		}
 		
+		@SuppressWarnings("unchecked")
 		ArrayList<Event> events2 = (ArrayList<Event>) events.clone();
 		
 		// remove bogus/dublicated events

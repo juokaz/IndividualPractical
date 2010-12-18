@@ -1,27 +1,10 @@
 package com.juozas.studentapp;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import android.app.ListActivity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.SimpleAdapter.ViewBinder;
 import android.widget.TabHost;
-import android.widget.TextView;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
 
 public class StudentApp extends TabActivity {
 	
