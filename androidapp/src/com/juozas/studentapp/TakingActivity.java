@@ -14,13 +14,14 @@ public class TakingActivity extends CoursesList {
         
         courses = data.getCoursesTaking();
         
+    	TextView text = (TextView) findViewById(R.id.text);
+        
         if (courses.size() > 0)
         {     
 	        updateList(courses);
 	        addClickHandler();
+	        text.setVisibility(TextView.GONE);
         } else {
-        	TextView text = (TextView) findViewById(R.id.text);
-
             text.setText("You have not selected any courses!");
         }
 	}

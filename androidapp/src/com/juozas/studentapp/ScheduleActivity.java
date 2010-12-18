@@ -2,15 +2,10 @@ package com.juozas.studentapp;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
-
 import com.juozas.studentapp.data.*;
 
 import android.app.Activity;
-import android.app.ListActivity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -37,6 +32,8 @@ public class ScheduleActivity extends Activity {
 		
 		TableLayout lectures = (TableLayout) findViewById(R.id.lectures);
 		
+		boolean lecturesToday = false;
+		
 		for (Course course : courses) {
 			
 			if ((course.isFirstSemester() && isFirstSemesterNow()) || course.isSecondSemester() && !isFirstSemesterNow())
@@ -56,8 +53,18 @@ public class ScheduleActivity extends Activity {
 		        	row.addView(name);
 		        	
 		        	lectures.addView(row);
+		        	
+		        	lecturesToday = true;
 				}
 			}
+		}
+		
+		TextView text = (TextView) findViewById(R.id.lectures_text);
+		
+		if (!lecturesToday) {
+            text.setText("You have no lectures today!");
+		} else {
+			text.setVisibility(TextView.GONE);
 		}
 	}
 	
