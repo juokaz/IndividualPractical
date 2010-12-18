@@ -1,6 +1,7 @@
 package com.juozas.studentapp.data;
 
-import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import android.util.Log;
 
@@ -22,12 +23,9 @@ public class Course {
 	private String SpecialArrangements;
 	private String FirstMeet;
 	private String Location;
+	private int[][] Options;
 	
-	private String Start;
-	private String End;
-	private String Alts;
-	private String Sites;
-	private String Options;
+	private ArrayList<Event> Events;
 	
 	public Course(String key) {
 		this.key = key;
@@ -133,34 +131,35 @@ public class Course {
 	public void setLocation(String location) {
 		Location = location;
 	}
-	public String getStart() {
-		return Start;
+	public ArrayList<Event> getEvents() {
+		return Events;
 	}
-	public void setStart(String start) {
-		Start = start;
+	public void setEvents(String start, String end, String alts, String sites) {
+		Events = Event.factory(start, end, sites, alts);
 	}
-	public String getEnd() {
-		return End;
-	}
-	public void setEnd(String end) {
-		End = end;
-	}
-	public String getAlts() {
-		return Alts;
-	}
-	public void setAlts(String alts) {
-		Alts = alts;
-	}
-	public String getSites() {
-		return Sites;
-	}
-	public void setSites(String sites) {
-		Sites = sites;
-	}
-	public String getOptions() {
+	public int[][] getOptions() {
 		return Options;
 	}
-	public void setOptions(String options) {
+	public void setOptions(String options_) {
+		
+		String[] parts = options_.split(",\\[");
+		
+		int[][] options = new int[parts.length][];
+		
+		for (int i = 0; i < parts.length; i++) {
+			String[] parts2 = parts[i].replace("[", "").replace("]", "").split(",");
+			
+			int[] options2 = new int[parts2.length];
+			
+			for (int j = 0; j < parts2.length; j++) {
+				options2[j] = Integer.parseInt(parts2[j]);
+			}
+			
+			options[i] = options2;
+			
+			Log.d("Course", "options[" + Integer.toString(i) + "] = " + Arrays.toString(options2));
+		}
+		
 		Options = options;
 	}
 }

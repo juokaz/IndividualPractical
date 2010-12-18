@@ -62,7 +62,7 @@ public class DBAdapter
     	Cursor mCursor = db.query(true, "courses", new String[] {
     						"key", "college", "school", "subject_area", "title", "level", "scqf_level",
 							"acronym", "normal_year", "visitors_only", "blocks", "co", "sy", "first_meet", 
-    						"location", "special_arrangements"}, 
+    						"location", "special_arrangements", "start", "end", "alts", "sites", "options"}, 
             		"key = ?", 
             		new String[] { id },
             		null, 

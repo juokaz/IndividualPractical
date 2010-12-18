@@ -92,6 +92,13 @@ public class DataProvider {
 		course.setLocation(cursor.getString(cursor.getColumnIndex("location")));
 		course.setSpecialArrangements(cursor.getString(cursor.getColumnIndex("special_arrangements")));
 		
+		course.setEvents(cursor.getString(cursor.getColumnIndex("start")), 
+						 cursor.getString(cursor.getColumnIndex("end")), 
+						 cursor.getString(cursor.getColumnIndex("alts")), 
+						 cursor.getString(cursor.getColumnIndex("sites")));
+		
+		course.setOptions(cursor.getString(cursor.getColumnIndex("options")));
+		
 		Cursor cursor_ = dbadapter.getCollege(cursor.getString(cursor.getColumnIndex("college")));
 
 		if (cursor_.getCount() > 0)

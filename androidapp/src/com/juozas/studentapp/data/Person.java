@@ -1,5 +1,7 @@
 package com.juozas.studentapp.data;
 
+import android.util.Log;
+
 public class Person {
 
 	private String Name;
@@ -19,10 +21,12 @@ public class Person {
 			parts2[i] = parts[i].replace("\"", "");
 		}
 		
-		String name = parts2[0] + " " + parts2[1] + " " + parts2[2];
+		String name = (parts2[0] + " " + parts2[1] + " " + parts2[2]).replace("  ", " ");
 		String email = parts2[4] + "@" + parts2[5];
 		
-		return new Person(name.replace("  ", " "), email);
+		Log.d("Person", "Person from '" + data + "', to name: '" + name + "', email: '" + email + "'");
+		
+		return new Person(name, email);
 	}
 	
 	public String getName() {
