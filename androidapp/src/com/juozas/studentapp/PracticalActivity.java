@@ -1,7 +1,5 @@
 package com.juozas.studentapp;
 
-import java.util.Map;
-
 import com.juozas.studentapp.data.*;
 
 import android.app.Activity;

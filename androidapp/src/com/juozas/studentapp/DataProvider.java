@@ -3,10 +3,7 @@ package com.juozas.studentapp;
 import com.juozas.studentapp.data.*;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import android.database.Cursor;
 import android.util.Log;
 
