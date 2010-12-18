@@ -40,6 +40,12 @@ public class StudentApp extends TabActivity {
                           res.getDrawable(R.drawable.ic_tab_courses))
                       .setContent(intent);
         tabHost.addTab(spec);
+
+        intent = new Intent().setClass(this, PracticalsActivity.class);
+        spec = tabHost.newTabSpec("practicals").setIndicator("Practicals",
+                          res.getDrawable(R.drawable.ic_tab_practicals))
+                      .setContent(intent);
+        tabHost.addTab(spec);
         
         int tab = 0;
         if (getIntent().getData() != null) {

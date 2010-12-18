@@ -153,7 +153,7 @@ public class DataProvider {
         }
         catch (Exception e)
         {
-        	Log.d("DataProvider", "Error processing practicals: " + e.getMessage());
+        	Log.d("DataProvider", "Error processing practicals: " + e.getMessage() + e.getStackTrace());
         }
         
         c.close();
@@ -172,16 +172,27 @@ public class DataProvider {
 		return practical;
 	}
 	
+	public boolean savePractical(Practical p)
+	{
+		return dbadapter.savePractical(p);
+	}
+	
+	public void deletePractical(Practical p)
+	{
+		dbadapter.deletePractical(p);
+	}
+	
 	private Practical parsePractical(Cursor c)
 	{
 		Course course = getCourse(c.getString(c.getColumnIndex("course_id")));
     	
-    	Practical practical = new Practical(Integer.parseInt(c.getString(c.getColumnIndex("id"))),
+    	Practical practical = new Practical(
     			course,
     			c.getString(c.getColumnIndex("title")),
-    			new Date(c.getString(c.getColumnIndex("due"))));
+    			new Date(c.getLong(c.getColumnIndex("due"))));
+    	practical.setId(c.getInt(c.getColumnIndex("id")));
     	practical.setNotes(c.getString(c.getColumnIndex("notes")));
-    	practical.setCompleted(c.getString(c.getColumnIndex("completed")).equals("1"));
+    	practical.setCompleted(c.getInt(c.getColumnIndex("completed")) == 1);
     	
     	return practical;
 	}

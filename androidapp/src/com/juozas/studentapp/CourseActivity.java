@@ -143,8 +143,6 @@ public class CourseActivity extends Activity {
             public void onClick(View v) {
                 Log.d("Course", "Add course clicked");
                 
-                data = ((App)getApplicationContext()).getDataProvider();
-                
                 if (data.saveCourse(course.getKey())) 
                 {
             		Log.d("Course", "Displaying course added");
@@ -168,8 +166,6 @@ public class CourseActivity extends Activity {
     	courseButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.d("Course", "Add course clicked");
-                
-                data = ((App)getApplicationContext()).getDataProvider();
                 
                 if (data.removeCourse(course.getKey()))
                 {
@@ -206,7 +202,7 @@ public class CourseActivity extends Activity {
 	
 	protected void displayError(String text)
 	{
-		Log.d("Course", "Displaying course error");
+		Log.d("Course", "Displaying course error '" + text + "'");
 		
 		int duration = Toast.LENGTH_SHORT;
 

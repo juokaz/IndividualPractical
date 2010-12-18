@@ -8,11 +8,10 @@ public class Practical {
 	private Course Course;
 	private String Title;
 	private Date Due;
-	private String Notes;
-	private boolean Completed;
+	private String Notes = null;
+	private boolean Completed = false;
 	
-	public Practical(int id, Course course, String title, Date due) {
-		Id = id;
+	public Practical(Course course, String title, Date due) {
 		Course = course;
 		Title = title;
 		Due = due;

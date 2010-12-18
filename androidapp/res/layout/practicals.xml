@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="wrap_content"
+	android:layout_height="wrap_content">
+
+	<Button android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:id="@+id/addPractical"
+		android:text="@string/addPractical" />
+
+	<TextView android:textSize="16dp"
+		android:textColor="?android:textColorPrimary" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="@string/Practicals" android:paddingTop="10px" />
+		
+	<ListView  
+         android:id="@android:id/list"
+         android:layout_width="wrap_content" 
+         android:layout_height="wrap_content" 
+         />
+		    
+    <TextView
+    	  android:text="@string/NoPracticals" 
+          android:id="@+id/practicals_text"
+          android:textSize="14dp"
+          android:textColor="?android:textColorSecondary"
+          android:paddingTop="10dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+				
+</LinearLayout>

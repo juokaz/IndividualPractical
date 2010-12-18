@@ -1,5 +1,7 @@
 package com.juozas.studentapp;
 
+import com.juozas.studentapp.data.*;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -103,7 +105,6 @@ public class DBAdapter
     
     public void removeCourse(String id)
     {
-    	// this will fail if table exists
     	db.execSQL("DELETE FROM taking WHERE KEY = ?;", new String[] { id });
     }
     
@@ -195,6 +196,56 @@ public class DBAdapter
                 null, 
                 null, 
                 "due asc");
+    }
+    
+    public boolean savePractical(Practical p)
+    {   
+    	long result = -1;
+    	
+    	try {
+	    	SQLiteStatement s = db.compileStatement("INSERT INTO practicals VALUES(?, ?, ?, ?, ?, ?)");
+	    	if (p.getId() != 0)
+	    		s.bindLong(1, p.getId());
+	    	else
+	    		s.bindNull(1);
+	    	s.bindString(2, p.getTitle());
+	    	s.bindString(3, p.getCourse().getKey());
+	    	s.bindLong(4, p.getDue().getTime());
+	    	s.bindString(5, p.getNotes());
+	    	s.bindLong(6, p.isCompleted() ? 1 : 0);
+	    	
+	    	result = s.executeInsert();
+	    	
+	    	s.close();
+    	} catch (Exception e) {
+    		Log.d("DBAdapter", "Practical is already in a table");
+    		
+    		try {
+	    		SQLiteStatement s = db.compileStatement("UPDATE practicals SET title = ?, course_id = ?, due = ?, notes = ?, completed = ? " +
+	    												"WHERE id = ?");
+		    	s.bindString(1, p.getTitle());
+		    	s.bindString(2, p.getCourse().getKey());
+		    	s.bindLong(3, p.getDue().getTime());
+		    	s.bindString(4, p.getNotes());
+		    	s.bindLong(5, p.isCompleted() ? 1 : 0);
+		    	s.bindLong(6, p.getId());
+		    	
+		    	s.execute();
+		    	
+		    	s.close();
+		    	
+		    	result = 1;
+        	} catch (Exception e2) {
+        		Log.d("DBAdapter", "Practical update failed: " + e2.getMessage());
+        	}
+    	}
+    	
+    	return result != -1;
+	}
+    
+    public void deletePractical(Practical p)
+    {
+    	db.execSQL("DELETE FROM practicals WHERE id = ?;", new String[] { Integer.toString(p.getId()) });
     }
     
     private void createCoursesTakingTable() throws Exception

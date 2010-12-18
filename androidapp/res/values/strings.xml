@@ -3,4 +3,7 @@
     <string name="hello">Hello World, StudentApp!</string>
     <string name="app_name">Student App</string>
 <string name="addCourse">I\'m taking this</string>
+<string name="addPractical">Add a Practical</string>
+<string name="Practicals">Practicals</string>
+<string name="NoPracticals">No practicals?! Clearly you must be mistaken.</string>
 </resources>

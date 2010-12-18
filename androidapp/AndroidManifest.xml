@@ -23,6 +23,8 @@
 <activity android:name="CoursesActivity"></activity>
 <activity android:name="ScheduleActivity"></activity>
 <activity android:name="PracticalActivity"></activity>
+<activity android:name="PracticalsActivity"></activity>
+<activity android:name="PracticalAddActivity"></activity>
 </application>
 
 
