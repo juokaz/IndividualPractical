@@ -1,0 +1,13 @@
+Special instructions:
+
+This application has been tested on Android 2.0 with Google APIs
+
+Not finished parts:
+
+none
+
+Additional features:
+
+* ability to write an email to course officer/secretary, by just clicking their email
+* fully translatable application, all strings in strings.xml
+* connects practicals with courses, making data more semantic
