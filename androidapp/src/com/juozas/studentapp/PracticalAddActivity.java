@@ -15,6 +15,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -159,7 +160,7 @@ public class PracticalAddActivity extends Activity {
 		String title_ = title.getText().toString();
 		
 		if (title_.equals("")) {
-			displayError("Title is needed");
+			displayError(R.string.TitleRequired);
 			return;
 		}
 		
@@ -175,7 +176,7 @@ public class PracticalAddActivity extends Activity {
 		}
 		
 		if (date.before(new Date())) {
-			displayError("Due date must be in a future");
+			displayError(R.string.DueDateShouldBeInFuture);
 			return;
 		}
 	
@@ -196,7 +197,7 @@ public class PracticalAddActivity extends Activity {
      	    i.setData(Uri.parse(Integer.toString(3)));
             startActivity(i);
 		} else {
-			displayError("Practical cannot be saved");
+			displayError(R.string.PracticalNotSaved);
 			return;
 		}
 	}
@@ -249,8 +250,8 @@ public class PracticalAddActivity extends Activity {
             return "0" + String.valueOf(c);
     }
 	
-	private void displayError(String message) {
-		Log.d("Course", "Displaying practical add error '" + message + "'");
+	private void displayError(int message) {
+		Log.d("Course", "Displaying practical add error '" + getString(message) + "'");
 
 		Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
 		toast.show();

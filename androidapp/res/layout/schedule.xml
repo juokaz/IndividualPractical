@@ -10,7 +10,7 @@
 			
 			<TextView android:textSize="16dp"
 				android:textColor="?android:textColorPrimary" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="Lectures today " android:paddingTop="10px" />
+				android:layout_height="wrap_content" android:text="@string/LecturesToday" android:paddingTop="10px" />
 				
 			<TableLayout android:id="@+id/lectures"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
 
 			<TextView android:textSize="16dp"
 				android:textColor="?android:textColorPrimary" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="Practicals ending soon" android:paddingTop="10px" />
+				android:layout_height="wrap_content" android:text="@string/PracticalsEndingSoon" android:paddingTop="10px" />
 				
 			<TableLayout android:id="@+id/practicals"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"

@@ -14,7 +14,7 @@
 
 			<TextView android:id="@+id/lectures_title" android:textSize="16dp"
 				android:textColor="?android:textColorPrimary" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="Lectures" android:paddingTop="10px" />
+				android:layout_height="wrap_content" android:text="@string/Lectures" android:paddingTop="10px" />
 				
 			<TableLayout android:id="@+id/lectures"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -23,55 +23,55 @@
 
 			<TextView android:textSize="16dp"
 				android:textColor="?android:textColorPrimary" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="Additional Info" android:paddingTop="10px" />
+				android:layout_height="wrap_content" android:text="@string/AdditionalInfo" android:paddingTop="10px" />
 		    
 			<TableLayout android:id="@+id/TableLayout01"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:stretchColumns="1">
 				<TableRow>
-					<TextView android:layout_column="1" android:text="Level"
+					<TextView android:layout_column="1" android:text="@string/Level"
 						android:padding="3dip" />
 					<TextView android:id="@+id/level" android:gravity="right"
 						android:padding="3dip" />
 				</TableRow>
 				<TableRow>
-					<TextView android:layout_column="1" android:text="First Meeting"
+					<TextView android:layout_column="1" android:text="@string/FirstMeeting"
 						android:padding="3dip" />
 					<TextView android:id="@+id/first_meeting" android:gravity="right"
 						android:padding="3dip" />
 				</TableRow>
 				<TableRow>
-					<TextView android:layout_column="1" android:text="Location"
+					<TextView android:layout_column="1" android:text="@string/Location"
 						android:padding="3dip" />
 					<TextView android:id="@+id/location" android:gravity="right"
 						android:padding="3dip" />
 				</TableRow>
 				<TableRow>
-					<TextView android:layout_column="1" android:text="College"
+					<TextView android:layout_column="1" android:text="@string/College"
 						android:padding="3dip" />
 					<TextView android:id="@+id/college" android:gravity="right"
 						android:padding="3dip" />
 				</TableRow>
 				<TableRow>
-					<TextView android:layout_column="1" android:text="School"
+					<TextView android:layout_column="1" android:text="@string/School"
 						android:padding="3dip" />
 					<TextView android:id="@+id/school" android:gravity="right"
 						android:padding="3dip" />
 				</TableRow>
 				<TableRow>
-					<TextView android:layout_column="1" android:text="Subject Area"
+					<TextView android:layout_column="1" android:text="@string/SubjectArea"
 						android:padding="3dip" />
 					<TextView android:id="@+id/subject_area" android:gravity="right"
 						android:padding="3dip" />
 				</TableRow>
 				<TableRow>
-					<TextView android:layout_column="1" android:text="Organizer"
+					<TextView android:layout_column="1" android:text="@string/Organizer"
 						android:padding="3dip" />
 					<TextView android:id="@+id/course_organizer" android:gravity="right"
 						android:padding="3dip" />
 				</TableRow>
 				<TableRow>
-					<TextView android:layout_column="1" android:text="Secretary"
+					<TextView android:layout_column="1" android:text="@string/Secretary"
 						android:padding="3dip" />
 					<TextView android:id="@+id/course_secretary" android:gravity="right"
 						android:padding="3dip" />
@@ -80,7 +80,7 @@
 
 			<TextView android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:id="@+id/special_arrangements_label"
-				android:layout_column="1" android:text="Special Arrangements"
+				android:layout_column="1" android:text="@string/SpecialArrangements"
 				android:padding="3dip" />
 			<TextView android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:id="@+id/special_arrangements"

@@ -92,7 +92,7 @@ public class PracticalActivity extends Activity {
 	
 	protected void displayCompleteButton()
 	{
-		completedButton.setText("I have completed this!");
+		completedButton.setText(R.string.HaveCompleted);
     	
     	// make it green
 		completedButton.getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
@@ -112,7 +112,7 @@ public class PracticalActivity extends Activity {
 	
 	protected void displayDisCompleteButton()
 	{
-		completedButton.setText("I haven't completed this!");
+		completedButton.setText(R.string.HaventCompleted);
     	
     	// make it red
 		completedButton.getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);

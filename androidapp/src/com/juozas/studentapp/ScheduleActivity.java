@@ -52,7 +52,7 @@ public class ScheduleActivity extends Activity {
 		        	name.setText(course.getTitle());
 		        	
 					TextView time = new TextView(this);
-		        	time.setText(Html.fromHtml("<b>" + event.getStart()) + "</b>");
+		        	time.setText(Html.fromHtml("<b>" + event.getStart() + "</b>"));
 		        	time.setPadding(0, 0, 10, 0);
 		        	
 		        	TableRow row = new TableRow(this);
@@ -69,7 +69,7 @@ public class ScheduleActivity extends Activity {
 		TextView text = (TextView) findViewById(R.id.lectures_text);
 		
 		if (!lecturesToday) {
-            text.setText("You have no lectures today!");
+            text.setText(R.string.NoLecturesToday);
 		} else {
 			text.setVisibility(TextView.GONE);
 		}
@@ -109,7 +109,7 @@ public class ScheduleActivity extends Activity {
 			if (getDaysDifference(practical.getDue()) > 0) {
 				time.setText(getDifference(practical.getDue()) + " left");
 			} else {
-				time.setText("Overdue!");
+				time.setText(R.string.overdue);
 			}
         	time.setPadding(0, 0, 10, 0);
         	
@@ -125,7 +125,7 @@ public class ScheduleActivity extends Activity {
 		TextView text = (TextView) findViewById(R.id.practicals_text);
 		
 		if (!practicalsSoon) {
-            text.setText("You have no tasks soon! You can relax...");
+            text.setText(R.string.NoTasksSoon);
 		} else {
 			text.setVisibility(TextView.GONE);
 		}

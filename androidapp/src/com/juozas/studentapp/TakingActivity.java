@@ -22,7 +22,7 @@ public class TakingActivity extends CoursesList {
 	        addClickHandler();
 	        text.setVisibility(TextView.GONE);
         } else {
-            text.setText("You have not selected any courses!");
+            text.setText(R.string.NoCourseSelected);
         }
 	}
 }

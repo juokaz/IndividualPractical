@@ -7,7 +7,7 @@
         <TableRow>
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="Course"/>
+                      android:text="@string/Course"/>
         </TableRow>
         <TableRow>
             <Spinner android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         <TableRow>
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="Title"/>
+                      android:text="@string/Title"/>
         </TableRow>
         <TableRow>
             <EditText android:id="@+id/title"
@@ -29,7 +29,7 @@
         <TableRow>
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="Due"/>
+                      android:text="@string/Due"/>
         </TableRow>
         <TableRow>
             <EditText android:id="@+id/due"
@@ -40,7 +40,7 @@
         <TableRow>
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="Due time"/>
+                      android:text="@string/DueTime"/>
         </TableRow>
         <TableRow>
             <EditText android:id="@+id/time"
@@ -49,7 +49,7 @@
                       android:layout_weight="1"/>
         </TableRow>
         <TableRow>
-            <TextView android:text="Notes"
+            <TextView android:text="@string/Notes"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"/>
         </TableRow>
@@ -61,7 +61,7 @@
         </TableRow>
         <TableRow>
             <Button android:layout_height="wrap_content"
-                    android:text="Save"
+                    android:text="@string/Save"
                     android:id="@+id/save"
                     android:layout_width="fill_parent"
                     android:layout_weight="1"/>

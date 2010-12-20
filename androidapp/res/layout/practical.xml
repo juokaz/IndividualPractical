@@ -16,13 +16,13 @@
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:stretchColumns="1" android:paddingTop="10px">
 				<TableRow>
-					<TextView android:layout_column="1" android:text="For"
+					<TextView android:layout_column="1" android:text="@string/For"
 						android:padding="3dip" />
 					<TextView android:id="@+id/course" android:gravity="right"
 						android:padding="3dip" />
 				</TableRow>
 				<TableRow>
-					<TextView android:layout_column="1" android:text="Due"
+					<TextView android:layout_column="1" android:text="@string/Due"
 						android:padding="3dip" />
 					<TextView android:id="@+id/due" android:gravity="right"
 						android:padding="3dip" />
@@ -31,7 +31,7 @@
 
 			<TextView android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:id="@+id/notes_label"
-				android:layout_column="1" android:text="Notes"
+				android:layout_column="1" android:text="@string/Notes"
 				android:padding="3dip" />
 			<TextView android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:id="@+id/notes"
@@ -42,14 +42,14 @@
 				android:stretchColumns="0" android:paddingTop="10px" android:layout_gravity="bottom">
 				<Button android:layout_width="fill_parent"
 					android:layout_height="wrap_content" android:id="@+id/completed"
-					android:text="Completed" />
+					android:text="@string/Completed" />
 				<TableRow>
 					<Button android:layout_width="fill_parent"
 						android:layout_height="wrap_content" android:id="@+id/edit"
-						android:text="Edit" />
+						android:text="@string/Edit" />
 					<Button android:layout_width="fill_parent"
 						android:layout_height="wrap_content" android:id="@+id/delete"
-						android:text="Delete" />
+						android:text="@string/Delete" />
 				</TableRow>
 		     </TableLayout>
 		</LinearLayout>

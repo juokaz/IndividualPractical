@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -116,7 +117,7 @@ public class CourseActivity extends Activity {
         }
         
         TextView lecturesTitle = (TextView) findViewById(R.id.lectures_title);
-        lecturesTitle.setText(lecturesTitle.getText() + ", all in " + (course.isFirstSemester() ? "first" : "second") + " semester");
+        lecturesTitle.setText(lecturesTitle.getText() + "," + R.string.AllIn + " " + (course.isFirstSemester() ? R.string.first : R.string.second) + " " + R.string.semester);
         
         TableLayout lectures = (TableLayout) findViewById(R.id.lectures);
         
@@ -134,7 +135,7 @@ public class CourseActivity extends Activity {
 	
 	protected void displayAddButton()
 	{
-		courseButton.setText("I'm taking this!");
+		courseButton.setText(R.string.IAmTakingThis);
     	
     	// make it green
     	courseButton.getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
@@ -151,14 +152,14 @@ public class CourseActivity extends Activity {
                 	displayRemoveButton();
                 }
                 else
-                	displayError("Course cannot be selected, clashes found! Are you sure you are taking this? Check Taking tab to be sure or contact your DoS.");
+                	displayError(R.string.CourseCannotBeSelected);
             }
         });
 	}
 	
 	protected void displayRemoveButton()
 	{
-		courseButton.setText("I'm not taking this!");
+		courseButton.setText(R.string.IAmNotTakingThis);
     	
     	// make it red
     	courseButton.getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
@@ -174,7 +175,7 @@ public class CourseActivity extends Activity {
                 	displayAddButton();
                 }
                 else
-                	displayError("Course cannot be removed!");
+                	displayError(R.string.CourseCannotBeRemoved);
             }
         });
 	}
@@ -182,16 +183,16 @@ public class CourseActivity extends Activity {
 	protected void displayDialog()
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("What do you want to do next?")
+		builder.setMessage(R.string.WhatNext)
 		       .setCancelable(false)
-		       .setPositiveButton("Go to Taking", new DialogInterface.OnClickListener() {
+		       .setPositiveButton(R.string.GoTaking, new DialogInterface.OnClickListener() {
 		           public void onClick(DialogInterface dialog, int id) {
 		        	   Intent i = new Intent(getApplicationContext(), StudentApp.class);
 		        	   i.setData(Uri.parse(Integer.toString(1)));
 		               startActivity(i);
 		           }
 		       })
-		       .setNegativeButton("Stay here", new DialogInterface.OnClickListener() {
+		       .setNegativeButton(R.string.StayHere, new DialogInterface.OnClickListener() {
 		           public void onClick(DialogInterface dialog, int id) {
 		                dialog.cancel();
 		           }
@@ -200,9 +201,9 @@ public class CourseActivity extends Activity {
 		alert.show();
 	}
 	
-	protected void displayError(String text)
+	protected void displayError(int text)
 	{
-		Log.d("Course", "Displaying course error '" + text + "'");
+		Log.d("Course", "Displaying course error '" + getString(text) + "'");
 		
 		int duration = Toast.LENGTH_SHORT;
 

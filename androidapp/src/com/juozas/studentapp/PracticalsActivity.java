@@ -9,6 +9,7 @@ import com.juozas.studentapp.data.*;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -58,7 +59,7 @@ public class PracticalsActivity extends ListActivity {
                 Log.d("Course", "Add practical clicked");
                 
                 if (data.getCoursesTaking().size() == 0) {
-                	displayError("You need to have at least one course added to Taking to create practical");
+                	displayError(R.string.CantCreatePractical);
                 } else {
 	                Intent intent = new Intent(getApplicationContext(), PracticalAddActivity.class);
 	                startActivity(intent);
@@ -109,8 +110,8 @@ public class PracticalsActivity extends ListActivity {
 		 setListAdapter(simpleAdapter);
     }
 	
-	private void displayError(String message) {
-		Log.d("Practicals", "Displaying practicals error '" + message + "'");
+	private void displayError(int message) {
+		Log.d("Practicals", "Displaying practicals error '" + getString(message) + "'");
 
 		Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
 		toast.show();
